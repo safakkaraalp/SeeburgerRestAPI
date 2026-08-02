@@ -1,0 +1,132 @@
+@startuml
+
+title Android Studio Client - MVVM UML Diagramm
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+    BackgroundColor #FFFFFF
+    BorderColor #333333
+    ArrowColor #333333
+}
+
+package "Android Studio Client" {
+
+    package "View" {
+
+        class SplashActivity <<Activity>> {
+            -SPLASH_DELAY: int
+            +onCreate(savedInstanceState: Bundle): void
+        }
+
+        class LoginActivity <<Activity>> {
+            +onCreate(savedInstanceState: Bundle): void
+        }
+
+        class InstanceActivity <<Activity>> {
+            -totalCountText: TextView
+            -statusText: TextView
+            -instanceListText: TextView
+            -lastRefreshText: TextView
+            -refreshButton: ImageButton
+            -envContainer: LinearLayout
+            -allInstances: List<BpInstance>
+            -envCounts: Map<String, Integer>
+
+            +onCreate(savedInstanceState: Bundle): void
+            -observeViewModel(): void
+            -updateDashboard(instances: List<BpInstance>): void
+            -createEnvironmentCards(): void
+            -filterByEnv(list: List<BpInstance>, envFilter: String): List<BpInstance>
+            -buildJson(instances: List<BpInstance>): String
+            -getDisplayName(env: String): String
+            -normalizeEnv(env: String): String
+            -getCurrentTime(): String
+        }
+    }
+
+    package "ViewModel" {
+
+        class InstanceViewModel <<ViewModel>> {
+            +instances: MutableLiveData<List<BpInstance>>
+            +errorMessage: MutableLiveData<String>
+            +loading: MutableLiveData<Boolean>
+            -instanceRepository: InstanceRepository
+
+            +loadInstances(): void
+        }
+    }
+
+    package "Repository" {
+
+        class InstanceRepository <<Repository>> {
+            -apiService: ApiService
+
+            +loadInstances(callback: InstanceCallback): void
+        }
+
+        interface InstanceCallback <<Callback>> {
+            +onSuccess(instances: List<BpInstance>): void
+            +onError(message: String): void
+        }
+    }
+
+    package "Network" {
+
+        interface ApiService <<Retrofit Interface>> {
+            +getAllInstances(): Call<List<BpInstance>>
+        }
+
+        class RetrofitClient <<Retrofit>> {
+            -retrofit: Retrofit
+            -BASE_URL: String
+
+            +getApiService(): ApiService
+        }
+    }
+
+    package "Model" {
+
+        class BpInstance <<Model>> {
+            -id: String
+            -state: Integer
+            -processQName: String
+            -startTime: Long
+            -lastAction: Long
+            -createUser: String
+            -env: String
+            -info3: String
+            -info6: String
+            -ownerId: String
+        }
+
+        class LoginRequest <<Model>> {
+            -username: String
+            -password: String
+        }
+
+        class LoginResponse <<Model>> {
+            -token: String
+        }
+    }
+}
+
+SplashActivity --> LoginActivity : startet Login
+LoginActivity --> InstanceActivity : öffnet Dashboard
+
+InstanceActivity --> InstanceViewModel : beobachtet LiveData
+InstanceViewModel --> InstanceRepository : fordert Daten an
+InstanceRepository --> ApiService : REST-Aufruf
+RetrofitClient --> ApiService : erstellt Service
+
+ApiService --> BpInstance : Als JSON
+InstanceActivity --> BpInstance : zeigt Daten an
+
+LoginActivity ..> LoginRequest : später JWT Login
+LoginActivity ..> LoginResponse : später Token Antwort
+
+InstanceRepository ..> InstanceCallback : gibt Ergebnis zurück
+
+
+@enduml

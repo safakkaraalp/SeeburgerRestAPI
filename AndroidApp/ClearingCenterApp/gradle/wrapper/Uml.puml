@@ -1,0 +1,155 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+title Android Client - MVVM UML mit JWT
+
+package "view" {
+
+    class SplashActivity {
+        - SPLASH_DELAY : int
+        + onCreate(savedInstanceState : Bundle) : void
+    }
+
+    class LoginActivity {
+        - usernameInput : EditText
+        - passwordInput : EditText
+        - loginButton : Button
+        - loginRepository : LoginRepository
+        - tokenManager : TokenManager
+        + onCreate(savedInstanceState : Bundle) : void
+    }
+
+    class InstanceActivity {
+        - totalCountText : TextView
+        - statusText : TextView
+        - instanceListText : TextView
+        - refreshButton : ImageButton
+        - allInstances : List<BpInstance>
+        - envCounts : Map<String, Integer>
+        - instanceViewModel : InstanceViewModel
+        + onCreate(savedInstanceState : Bundle) : void
+        + observeViewModel() : void
+        + updateDashboard(instances : List<BpInstance>) : void
+        + renderProcessCards() : void
+        + renderJsonView() : void
+        + buildJson(instances : List<BpInstance>) : String
+        + filterByEnv(env : String) : List<BpInstance>
+        + getDisplayName(env : String) : String
+        + normalizeEnv(env : String) : String
+        + getCurrentTime() : String
+    }
+}
+
+package "viewmodel" {
+
+    class InstanceViewModel {
+        - instances : MutableLiveData<List<BpInstance>>
+        - errorMessage : MutableLiveData<String>
+        - loading : MutableLiveData<Boolean>
+        - instanceRepository : InstanceRepository
+        + loadInstances() : void
+    }
+}
+
+package "repository" {
+
+    class LoginRepository {
+        - apiService : ApiService
+        + login(username : String, password : String, callback : LoginCallback) : void
+    }
+
+    interface LoginCallback {
+        + onSuccess(token : String) : void
+        + onError(message : String) : void
+    }
+
+    class InstanceRepository {
+        - apiService : ApiService
+        - authToken : String
+        + setAuthToken(token : String) : void
+        + clearAuthToken() : void
+        + loadInstances(callback : InstanceCallback) : void
+    }
+
+    interface InstanceCallback {
+        + onSuccess(instances : List<BpInstance>) : void
+        + onError(message : String) : void
+    }
+}
+
+package "network" {
+
+    interface ApiService {
+        + login(loginRequest : LoginRequest) : Call<LoginResponse>
+        + getAllInstances(token : String) : Call<List<BpInstance>>
+    }
+
+    class RetrofitClient {
+        - BASE_URL : String
+        - retrofit : Retrofit
+        + getApiService() : ApiService
+    }
+}
+
+package "util" {
+
+    class TokenManager {
+        - sharedPreferences : SharedPreferences
+        + saveToken(token : String) : void
+        + getToken() : String
+        + clearToken() : void
+    }
+}
+
+package "model" {
+
+    class LoginRequest {
+        - username : String
+        - password : String
+    }
+
+    class LoginResponse {
+        - token : String
+        - tokenType : String
+        - username : String
+    }
+
+    class BpInstance {
+        - id : String
+        - state : int
+        - processQName : String
+        - startTime : Long
+        - lastAction : Long
+        - createUser : String
+        - env : String
+        - info3 : String
+        - info6 : String
+        - ownerId : String
+    }
+}
+
+SplashActivity --> LoginActivity : startet Login
+
+LoginActivity --> LoginRepository : Login ausführen
+LoginActivity --> TokenManager : Token speichern
+LoginActivity --> InstanceRepository : Token setzen
+LoginActivity --> InstanceActivity : öffnet Dashboard
+
+LoginRepository --> LoginRequest : erstellt
+LoginRepository --> ApiService : POST /api/v1/auth/login
+LoginRepository --> LoginResponse : erhält Token
+LoginRepository --> LoginCallback : gibt Ergebnis zurück
+
+TokenManager --> InstanceRepository : gespeichertes Token
+
+InstanceActivity --> InstanceViewModel : beobachtet LiveData
+InstanceViewModel --> InstanceRepository : fordert Prozessdaten an
+InstanceRepository --> ApiService : GET /api/v1/instances\nAuthorization: Bearer Token
+InstanceRepository --> InstanceCallback : gibt Ergebnis zurück
+InstanceRepository --> BpInstance : erhält Liste
+
+RetrofitClient --> ApiService : erstellt Retrofit-Service
+
+@enduml

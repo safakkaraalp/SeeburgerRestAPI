@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F6FA"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="62dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="42dp">
+
+        <!-- Kopfbereich -->
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clearing Center"
+            android:textColor="#101828"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/subtitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="SEEBURGER AG &amp; MIT Unternehmensberatung GmbH"
+            android:textColor="#667085"
+            android:textSize="13sp" />
+
+        <!-- Datenübersicht -->
+
+        <LinearLayout
+            android:id="@+id/summaryCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="19dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verfügbare Datensätze"
+                    android:textColor="#667085"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/totalCountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="0"
+                    android:textColor="#D90429"
+                    android:textSize="42sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lastRefreshText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Zuletzt aktualisiert: --:--"
+                    android:textColor="#98A2B3"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/refreshButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:contentDescription="Daten aktualisieren"
+                android:padding="15dp"
+                android:src="@android:drawable/ic_popup_sync" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:padding="13dp"
+            android:text="Daten werden geladen..."
+            android:textColor="#166534"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <!-- Filterkarte -->
+
+        <LinearLayout
+            android:id="@+id/filterCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="19dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prozesssuche"
+                android:textColor="#101828"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Kunde, System und Zeitraum auswählen"
+                android:textColor="#667085"
+                android:textSize="13sp" />
+
+            <!-- Kunde -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Kunde"
+                android:textColor="#344054"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/customerSelectButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@android:drawable/arrow_down_float"
+                android:gravity="center_vertical"
+                android:minHeight="56dp"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="14dp"
+                android:text="Kunde auswählen"
+                android:textColor="#667085"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <!-- System -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:text="System"
+                android:textColor="#344054"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/systemSelectButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableEnd="@android:drawable/arrow_down_float"
+                android:gravity="center_vertical"
+                android:minHeight="56dp"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="14dp"
+                android:text="Alle Systeme"
+                android:textColor="#101828"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <!-- Zeitraum -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:text="Zeitraum"
+                android:textColor="#344054"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Der Zeitraum darf maximal 40 Kalendertage umfassen."
+                android:textColor="#98A2B3"
+                android:textSize="12sp" />
+
+            <!-- Schnellwahl -->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/oneDayButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="42dp"
+                        android:paddingStart="17dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="17dp"
+                        android:paddingBottom="10dp"
+                        android:text="1 Tag"
+                        android:textColor="#344054"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/sevenDaysButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:minHeight="42dp"
+                        android:paddingStart="17dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="17dp"
+                        android:paddingBottom="10dp"
+                        android:text="7 Tage"
+                        android:textColor="#344054"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fifteenDaysButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:minHeight="42dp"
+                        android:paddingStart="17dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="17dp"
+                        android:paddingBottom="10dp"
+                        android:text="15 Tage"
+                        android:textColor="#344054"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/maximumRangeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:minHeight="42dp"
+                        android:paddingStart="17dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="17dp"
+                        android:paddingBottom="10dp"
+                        android:text="Maximaler Zeitraum"
+                        android:textColor="#344054"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- Manuelle Auswahl -->
+
+            <TextView
+                android:id="@+id/startDateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:drawableStart="@android:drawable/ic_menu_my_calendar"
+                android:drawablePadding="11dp"
+                android:gravity="center_vertical"
+                android:minHeight="56dp"
+                android:padding="15dp"
+                android:text="Startdatum und Uhrzeit"
+                android:textColor="#101828"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/endDateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:drawableStart="@android:drawable/ic_menu_my_calendar"
+                android:drawablePadding="11dp"
+                android:gravity="center_vertical"
+                android:minHeight="56dp"
+                android:padding="15dp"
+                android:text="Enddatum und Uhrzeit"
+                android:textColor="#101828"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Aktionen -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/resetFilterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:minHeight="53dp"
+                    android:padding="13dp"
+                    android:text="Zurücksetzen"
+                    android:textColor="#344054"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/applyFilterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:minHeight="53dp"
+                    android:padding="13dp"
+                    android:text="Prozesse anzeigen"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/filterSummaryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:padding="14dp"
+                android:text="Bitte Kunde und Zeitraum auswählen."
+                android:textColor="#1E40AF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Startzustand -->
+
+        <LinearLayout
+            android:id="@+id/emptyStateContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <TextView
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:gravity="center"
+                android:text="⌕"
+                android:textColor="#D90429"
+                android:textSize="44sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/emptyStateTitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:text="Noch keine Prozesse ausgewählt"
+                android:textColor="#101828"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/emptyStateDescriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:text="Wählen Sie einen Kunden und einen Zeitraum aus."
+                android:textColor="#667085"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- Ergebnisüberschrift -->
+
+        <LinearLayout
+            android:id="@+id/resultHeaderContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/processTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Gefundene Prozesse"
+                android:textColor="#101828"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resultCountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="13dp"
+                android:paddingTop="7dp"
+                android:paddingEnd="13dp"
+                android:paddingBottom="7dp"
+                android:text="0 Treffer"
+                android:textColor="#B91C1C"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/processContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

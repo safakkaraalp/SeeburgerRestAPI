@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background -->
+    <ImageView
+        android:id="@+id/loginBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/login_background"
+        android:scaleType="centerCrop" />
+
+    <!-- Login Card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="42dp"
+        android:background="@drawable/login_card_background"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- USERNAME -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benutzername"
+            android:textColor="#D0021B"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/usernameInput"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/login_input_background"
+            android:hint="Benutzername"
+            android:inputType="text"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp" />
+
+        <!-- PASSWORD -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Passwort"
+            android:textColor="#D0021B"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="14dp" />
+
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/login_input_background"
+            android:hint="Passwort"
+            android:inputType="textPassword"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp" />
+
+        <!-- ❗ ERROR TEXT -->
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#D0021B"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <!-- LOGIN BUTTON -->
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="14dp"
+            android:backgroundTint="#D0021B"
+            android:text="ANMELDEN"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <!-- ❗ PROGRESS BAR -->
+        <ProgressBar
+            android:id="@+id/loginProgress"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</FrameLayout>
